@@ -21,8 +21,14 @@ function speakerListItems(speakers) {
 
 const PresentationView = props => {
   const { content } = props;
-
   const speakers = speakerListItems(content.speaker);
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+          year: "numeric",
+          month: "long",
+          day: "2-digit",
+          hour: "numeric",
+          minute: "numeric"
+        });
   return (
     <Container id="page-document">
       <Helmet title={content.title} />
@@ -41,15 +47,13 @@ const PresentationView = props => {
             </Card>
           </Grid.Column>
           <Grid.Column>
-            <h3>Speaker(s)</h3>
+            <h3>Speaker</h3>
             <p>{speakers}</p>
 
             <h3>Length</h3>
-            <p>{content.duration.title}</p>
-
+                {content.duration.title}
             <h3>When</h3>
-            <p>{content.start}</p>
-
+                {formatter.format(Date.parse(content.start))}
             <h3>Target audience</h3>
             <div>{
                 content.audience.map((e) => {
